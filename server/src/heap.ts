@@ -1,6 +1,7 @@
 /** Returns a negative value if a < b, a positive value if a > b, and 0 if a = b. */
 export type Comparator<E> = (a: E, b: E) => number;
 
+
 /**
  * Maintains a list of values, providing the ability to efficiently retrieve
  * (and remove) the smallest value from the list (in O(log n) time).

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Building, Edge, parseBuildings } from './buildings';
 import { Editor } from './Editor';
@@ -106,16 +107,21 @@ export class App extends Component<AppProps, AppState> {
     console.error(`fetch of /api/buildings failed: ${msg}`)
     if (ex instanceof Error)
       throw ex;
-  };
+  };    
+
+  
 
   doEndPointChange = (endPoints?: [Building, Building]): void => {
     this.setState({endPoints, path: undefined});
     if (endPoints) {
-      const [start, end] = endPoints;
-      console.log(`show path from ${start.shortName} to ${end.shortName}`);
+      const [from, to] = endPoints;
+      console.log(`show path from ${from.shortName} to ${to.shortName}`);
       // TODO (Task 1 - Retrieve You Me): fetch the shortest path and parse the response
-    } else {
-      console.log('show no path');
+      fetch(`/api/shortestPath?from=${from.shortName}&to=${to.shortName}`)
+      
+      .then(res => res.json())
+      .then(data => this.setState({ path: data.path }))
+      .catch(err => console.error('Error fetching shortest path:', err));
     }
-  };
+  } 
 }
